@@ -56,7 +56,7 @@ public class SteeringAgentChallenge : MonoBehaviour
     [Header("Obstacle Avoidance")]
 
     [SerializeField]
-    private SteeringSensorChallenge sensor;
+    private SteeringSensor sensor;
 
     [SerializeField]
     private float avoidanceWeight = 2.5f;
@@ -75,32 +75,30 @@ public class SteeringAgentChallenge : MonoBehaviour
     private float panicRadius = 2f;
     [SerializeField]
     private Vector3 lastKnownPlayerPosition;
+
+    [Header("Pursue")]
     [SerializeField]
-    private float pursueRadius = 2f;
-    private bool finishedPursue = true;
+    private float predictionTime = 2.5f;
+    [SerializeField]
+    private Vector3 lastTargetPosition;
 
     private void Start()
     {
-        // lastKnownPlayerPosition = target.position;
         _renderer = GetComponent<Renderer>();
         wanderDirection = transform.forward;
         wanderTimer = wanderChangeInterval;
     }
-
     private void Update()
     {
         Vector3 desiredVelocity;
 
         if (useTarget && target != null)
         {
-            if(sensor.DetectPlayer(transform.forward)){
-                desiredVelocity = CalculateArrive();
-            } else if(finishedPursue){
-                desiredVelocity = CalculateWander();
-            } else
-            {
-                desiredVelocity = CalculatePursue();
-            }
+            desiredVelocity = CalculateArrive();
+        }
+        else if(!useTarget && target != null)
+        {
+            desiredVelocity = CalculatePursue(); 
         }
         else
         {
@@ -171,11 +169,51 @@ public class SteeringAgentChallenge : MonoBehaviour
                 Mathf.Clamp01(normalizedDistance);
         }
 
-        finishedPursue = false;
-        lastKnownPlayerPosition = target.position;
         return toTarget.normalized * desiredSpeed;
     }
 
+    private Vector3 CalculatePursue()
+    {
+        Vector3 targetVelocity = (target.position - lastTargetPosition) / Time.deltaTime;
+        Vector3 predictedPosition =
+            target.position +
+            targetVelocity * predictionTime;
+
+        Vector3 toTarget =
+            predictedPosition - transform.position;
+
+        toTarget.y = 0f;
+
+        float distance = toTarget.magnitude;
+
+        if (distance <= stopRadius)
+        {
+            return Vector3.zero;
+        }
+
+        float desiredSpeed = maxSpeed;
+
+        // 73. Level 1
+        _renderer.material.color = Color.pink;
+        if (distance < slowRadius)
+        {
+            float range =
+                Mathf.Max(
+                    slowRadius - stopRadius,
+                    0.001f
+                );
+
+            float normalizedDistance =
+                (distance - stopRadius) / range;
+
+            desiredSpeed =
+                maxSpeed *
+                Mathf.Clamp01(normalizedDistance);
+        }
+
+        lastTargetPosition = target.position;
+        return toTarget.normalized * desiredSpeed;
+    }
     private Vector3 CalculateWander()
     {
         wanderTimer -= Time.deltaTime;
@@ -225,43 +263,6 @@ public class SteeringAgentChallenge : MonoBehaviour
         }
 
         return CalculateWander();
-    }
-
-    private Vector3 CalculatePursue()
-    {
-        Vector3 toTarget =
-            lastKnownPlayerPosition - transform.position;
-
-        toTarget.y = 0f;
-
-        float distance = toTarget.magnitude;
-
-        if (distance <= pursueRadius)
-        {
-            finishedPursue = true;
-            return CalculateWander();
-        }
-
-        _renderer.material.color = Color.pink;
-        float desiredSpeed = maxSpeed;
-
-        if (distance < slowRadius)
-        {
-            float range =
-                Mathf.Max(
-                    slowRadius - stopRadius,
-                    0.001f
-                );
-
-            float normalizedDistance =
-                (distance - stopRadius) / range;
-
-            desiredSpeed =
-                maxSpeed *
-                Mathf.Clamp01(normalizedDistance);
-        }
-
-        return toTarget.normalized * desiredSpeed;
     }
 
     private Vector3 ApplyObstacleAvoidance(

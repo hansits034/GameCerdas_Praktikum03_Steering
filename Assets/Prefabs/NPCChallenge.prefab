@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6311705332565913756}
   - component: {fileID: 4563426650202208689}
   - component: {fileID: 6809217331918175762}
-  - component: {fileID: 8874582330014591663}
+  - component: {fileID: 7422562184994765952}
   - component: {fileID: 7906522755569818885}
   m_Layer: 7
   m_Name: NPCChallenge
@@ -120,13 +120,14 @@ MonoBehaviour:
     m_Bits: 128
   separationRadius: 1.5
   separationWeight: 1.5
-  sensor: {fileID: 8874582330014591663}
+  sensor: {fileID: 7422562184994765952}
   avoidanceWeight: 2.5
   _renderer: {fileID: 0}
   panicRadius: 2
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
-  pursueRadius: 2
---- !u!114 &8874582330014591663
+  targetRb: {fileID: 0}
+  predictionTime: 2.5
+--- !u!114 &7422562184994765952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,20 +136,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2658714937671152016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8ea7b5cf1aeae945831211ff90da5c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 656ea165ffd0be843924fb380a336900, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SteeringSensorChallenge
-  obstacleDistance: 3
+  m_EditorClassIdentifier: Assembly-CSharp::SteeringSensor
+  sensorDistance: 3
   sensorRadius: 0.5
   sensorHeight: 0.5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8
-  playerMask:
-    serializedVersion: 2
-    m_Bits: 64
   forwardBias: 0.5
-  playerDistance: 8
 --- !u!136 &7906522755569818885
 CapsuleCollider:
   m_ObjectHideFlags: 0
