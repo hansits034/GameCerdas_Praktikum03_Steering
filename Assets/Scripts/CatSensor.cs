@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CuriousCatSensor : MonoBehaviour
+public class CatSensor : MonoBehaviour
 {
     [Header("Obstacle Sensor")]
 

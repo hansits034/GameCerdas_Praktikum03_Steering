@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 6311705332565913756}
   - component: {fileID: 4563426650202208689}
   - component: {fileID: 7906522755569818885}
-  - component: {fileID: 2916226108660088785}
+  - component: {fileID: 82771057382768577}
   - component: {fileID: 891636387028281841}
   m_Layer: 7
-  m_Name: CuriousCat
+  m_Name: TimidCat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,7 +116,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2916226108660088785
+--- !u!114 &82771057382768577
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,19 +125,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 2658714937671152016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7a8c16a6da6fb54fa969960b97d8444, type: 3}
+  m_Script: {fileID: 11500000, guid: 0e4ea417863a52e4abc8e8acf41e9b32, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CuriousCatAgent
+  m_EditorClassIdentifier: Assembly-CSharp::TimidAnimalAgent
   target: {fileID: 0}
-  useTarget: 1
   maxSpeed: 4
   maxAcceleration: 8
   turnSpeed: 8
-  slowRadius: 4
-  stopRadius: 4
   wanderSpeed: 2.5
   wanderChangeInterval: 1.5
   wanderAngleChange: 45
+  fleeRadius: 3
+  fleeSpeed: 6
   agentMask:
     serializedVersion: 2
     m_Bits: 0
@@ -145,17 +144,8 @@ MonoBehaviour:
   separationWeight: 1.5
   sensor: {fileID: 891636387028281841}
   avoidanceWeight: 2.5
-  fleeSpeed: 10
-  panicRadius: 1.5
-  calmDownRadius: 10
-  isPanicked: 0
-  lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
-  lastKnownPlayerVelocity: {x: 0, y: 0, z: 0}
-  lastSeenTime: 0
-  pursueRadius: 5
-  MaxPredictionTime: 2
-  finishedPursue: 1
-  _renderer: {fileID: 4563426650202208689}
+  _renderer: {fileID: 0}
+  velocity: {x: 0, y: 0, z: 0}
 --- !u!114 &891636387028281841
 MonoBehaviour:
   m_ObjectHideFlags: 0

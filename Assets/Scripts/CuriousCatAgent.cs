@@ -56,7 +56,7 @@ public class CuriousCatAgent : MonoBehaviour
     [Header("Obstacle Avoidance")]
 
     [SerializeField]
-    private CuriousCatSensor sensor;
+    private CatSensor sensor;
 
     [SerializeField]
     private float avoidanceWeight = 2.5f;
