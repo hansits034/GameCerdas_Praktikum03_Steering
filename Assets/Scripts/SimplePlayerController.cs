@@ -6,11 +6,14 @@ public class SimplePlayerController : MonoBehaviour
     [SerializeField]
     private float moveSpeed = 5f;
 
+
     [SerializeField]
     private float turnSpeed = 10f;
 
     private CharacterController controller;
 
+    public Vector3 Velocity => controller.velocity;
+    
     private void Awake()
     {
         controller = GetComponent<CharacterController>();

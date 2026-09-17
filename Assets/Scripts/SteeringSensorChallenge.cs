@@ -114,18 +114,12 @@ public class SteeringSensorChallenge : MonoBehaviour
             transform.position +
             Vector3.up * sensorHeight;
 
-        if (Physics.Raycast(
+        return Physics.Raycast(
             origin,
             front,
             out lastHit,
             playerDistance,
             playerMask,
-            QueryTriggerInteraction.Ignore))
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+            QueryTriggerInteraction.Ignore);
     }
 }
